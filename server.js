@@ -13,6 +13,13 @@ const mongoose = require('mongoose');
 const connectDB = require('./config/dbConn');
 const PORT = process.env.PORT || 3500;
 
+
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*'); // Zezwól na dostęp z dowolnej domeny
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    next();
+});
+
 // custom middleware logger
 // app.use(logger);
 
