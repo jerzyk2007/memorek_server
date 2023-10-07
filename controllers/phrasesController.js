@@ -70,6 +70,16 @@ const getPhrase = async (req, res) => {
     res.json(employee);
 };
 
+const getSamplePhrase = async (req, res) => {
+    try {
+        const result = await Phrase.aggregate([{ $sample: { size: 1 } }]);
+        res.send(result);
+    }
+    catch (err) {
+        console.error(err);
+    }
+
+};
 
 
 module.exports = {
@@ -78,4 +88,5 @@ module.exports = {
     updatePhrase,
     deletePhrase,
     getPhrase,
+    getSamplePhrase
 };

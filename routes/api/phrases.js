@@ -13,6 +13,7 @@ router.route('/')
 router.route('/:id')
     .get(phrasesController.getPhrase);
 
-
+router.route('/sample')
+    .get(phrasesController.getSamplePhrase);
 
 module.exports = router;
