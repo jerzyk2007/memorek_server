@@ -13,7 +13,6 @@ router.route('/')
 router.route('/:id')
     .get(phrasesController.getPhrase);
 
-router.route('/many')
-    .post(phrasesController.createManyPhrases);
+
 
 module.exports = router;
