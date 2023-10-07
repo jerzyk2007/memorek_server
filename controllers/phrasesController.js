@@ -71,14 +71,9 @@ const getPhrase = async (req, res) => {
 };
 
 const getSamplePhrase = async (req, res) => {
-    // res.json({ 'message': "sample" });
-    try {
-        const result = await Phrase.aggregate([{ $sample: { size: 1 } }]);
-        res.send(result);
-    }
-    catch (err) {
-        console.error(err);
-    }
+    const result = await Phrase.aggregate([{ $sample: { size: 1 } }]);
+    if (!result) return res.status(204).json({ message: "No phrases found" });
+    res.send(result);
 
 };
 

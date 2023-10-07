@@ -10,8 +10,8 @@ router.route('/')
     .put(verifyRoles(ROLES_LIST.Admin, ROLES_LIST.Editor), phrasesController.updatePhrase)
     .delete(verifyRoles(ROLES_LIST.Admin), phrasesController.deletePhrase);
 
-// router.route('/jeden')
-//     .get(phrasesController.getSamplePhrase);
+router.route('/one')
+    .get(phrasesController.getSamplePhrase);
 
 router.route('/:id')
     .get(phrasesController.getPhrase);
