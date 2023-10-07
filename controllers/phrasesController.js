@@ -71,6 +71,7 @@ const getPhrase = async (req, res) => {
 };
 
 const getSamplePhrase = async (req, res) => {
+    // res.json({ 'message': "sample" });
     try {
         const result = await Phrase.aggregate([{ $sample: { size: 1 } }]);
         res.send(result);
