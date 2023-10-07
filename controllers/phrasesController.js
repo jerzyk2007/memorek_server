@@ -68,10 +68,30 @@ const getPhrase = async (req, res) => {
     res.json(employee);
 };
 
+const createManyPhrases = async (req, res) => {
+    res.send('Many');
+    // if (!req?.body?.question || !req?.body?.answer) {
+    //     return res.status(400).json({
+    //         "message": "Question and answer are rquired"
+    //     });
+    // }
+    // try {
+    //     const result = await Phrase.create({
+    //         question: req.body.question,
+    //         answer: req.body.answer
+    //     });
+    //     res.status(201).json(result);
+    // }
+    // catch (err) {
+    //     console.error(err);
+    // }
+};
+
 module.exports = {
     getAllPhrases,
     createNewPhrases,
     updatePhrase,
     deletePhrase,
-    getPhrase
+    getPhrase,
+    createManyPhrases
 };
