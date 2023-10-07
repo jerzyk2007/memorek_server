@@ -1,0 +1,9 @@
+20230927	11:57:35	4734b4f2-78d5-4552-ab14-e503807fb195	Error: Not allowed by CORS
+20230927	11:57:57	66c4fb4b-4a8f-42eb-88ab-dd4e4a166dc0	Error: Not allowed by CORS
+20230927	11:57:57	ed44f5f6-2fb5-433f-ae05-fa91e9f9d6ef	Error: Not allowed by CORS
+20230927	17:21:55	a972e9b3-2fff-4e56-bb1a-5a04588f1f67	Error: ENOENT: no such file or directory, stat 'D:\PROGRAMOWANIE\KursWebDev\kurs Node Dave Gray\08tut\routes\views\index.html'
+20230929	18:29:03	a8c9c04d-e70f-4894-b9e6-a6bdfb1f957a	TypeError: Cannot read properties of undefined (reading 'spli')
+20230929	18:29:21	292acf92-2b63-4cb4-b775-c52f8ba33a01	TypeError: Cannot read properties of undefined (reading 'split')
+20230929	18:32:17	85968079-eff9-4aa6-984f-4c678e3fd67f	TypeError: Cannot read properties of undefined (reading 'split')
+20230929	19:53:17	58bdd7b9-4107-46de-8bf8-ed7b8fb25639	TypeError: next is not a function
+20230929	19:53:19	c0ca95e7-b452-4bcf-8d76-de97dec69441	TypeError: next is not a function
