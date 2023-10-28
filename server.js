@@ -54,6 +54,7 @@ app.use('/logout', require('./routes/logout'));
 
 // app.use(verifyJWT);
 app.use('/phrases', require('./routes/api/phrases'));
+app.use('/collections', require('./routes/api/collections'));
 
 app.all('*', (req, res) => {
     res.status(404);

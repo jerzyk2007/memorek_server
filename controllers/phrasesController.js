@@ -1,7 +1,7 @@
 
 const Phrase = require('../model/Phrase');
 
-const dataJSON = require('../data/dictionary.json');
+// const dataJSON = require('../data/dictionary.json');
 
 
 const getAllPhrases = async (req, res) => {
