@@ -36,10 +36,11 @@ const verifyRoles = require('../../middleware/verifyRoles');
 // router.route('/one')
 //     .get(phrasesController.getSamplePhrase);
 
-router.route('/:collections')
-    .get(phrasesController.getAllPhrases);
+router.route('/learn/:collections')
+    .get(phrasesController.getLearnPhrases);
+router.route('/test/:collections')
+    .get(phrasesController.getTestPhrases);
 
 // router.route('/:collections/:id')
 // .get(phrasesController.getAllPhrases);
-
 module.exports = router;

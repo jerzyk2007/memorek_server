@@ -5,8 +5,6 @@ const path = require('path');
 const cors = require('cors');
 const corsOptions = require('./config/corsOptions');
 const credentials = require('./middleware/credentials');
-const { logger } = require('./middleware/logEvents');
-const errorHandler = require('./middleware/errorHandler');
 const verifyJWT = require('./middleware/verifyJWT');
 const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
@@ -19,9 +17,6 @@ app.use((req, res, next) => {
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     next();
 });
-
-// custom middleware logger
-// app.use(logger);
 
 // Handle options credentials check - before cors
 // and fetch cookies credentials requirement
@@ -46,7 +41,7 @@ app.use(cookieParser());
 app.use('/', express.static(path.join(__dirname, '/public')));
 
 // routes
-app.use('/', require('./routes/root'));
+// app.use('/', require('./routes/root'));
 app.use('/register', require('./routes/register'));
 app.use('/auth', require('./routes/auth'));
 app.use('/refresh', require('./routes/refresh'));
@@ -68,10 +63,9 @@ app.all('*', (req, res) => {
     }
 }
 );
+
 // connect to mongoDB
 connectDB();
-
-app.use(errorHandler);
 
 mongoose.connection.once('open', () => {
     console.log('Connected to mongoDB');
