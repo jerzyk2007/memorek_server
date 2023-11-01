@@ -22,13 +22,17 @@ const getLearnPhrases = async (req, res) => {
 
 const getTestPhrases = async (req, res) => {
     const { collections } = req.params;
+    let questionsLength = 15;
     let testQuestions = [];
     try {
         const collection = mongoose.connection.db.collection(collections);
         const count = await collection.countDocuments({});
+        if (questionsLength > count) {
+            questionsLength = count;
+        }
         const maxAnswers = 4; // Ilość odpowiedzi na każde pytanie
 
-        while (testQuestions.length < 3) {
+        while (testQuestions.length < questionsLength) {
             const drawIdQuestion = Math.floor(Math.random() * count);
             const drawQuestionElement = await collection.find({}).skip(drawIdQuestion).limit(1).toArray();
             const isUniqueQuestion = !testQuestions.some(item => item.question === drawQuestionElement[0].question);
@@ -62,7 +66,6 @@ const getTestPhrases = async (req, res) => {
                 });
             }
         }
-
         res.json(testQuestions);
     } catch (err) {
         console.log(err);
