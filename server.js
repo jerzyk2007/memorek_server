@@ -12,6 +12,9 @@ const connectDB = require('./config/dbConn');
 const PORT = process.env.PORT || 3500;
 
 
+// cookie problem
+app.set('trust proxy', 1);
+
 // Handle options credentials check - before cors
 // and fetch cookies credentials requirement
 app.use(credentials);
