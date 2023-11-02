@@ -37,7 +37,7 @@ const handleLogin = async (req, res) => {
             {
                 sameSite: "None",
                 secure: true,
-                domain: "www.front-web.pl",
+                domain: ".front-web.pl",
                 httpOnly: true
             });
 
