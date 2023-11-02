@@ -1,10 +1,9 @@
-const allowedOrigin = require('./allowedOrigins');
+const allowedOrigins = require('./allowedOrigins');
 
 const corsOptions = {
     origin: (origin, callback) => {
-        // work on other servers than localhost
-        // if (whiteList.indexOf(origin) !== -1) {
-        if (!origin || allowedOrigin.indexOf(origin) !== -1) {
+        // Sprawdź, czy pochodzenie jest na liście zaufanych origin
+        if (!origin || allowedOrigins.indexOf(origin) !== -1) {
             callback(null, true);
         } else {
             callback(new Error('Not allowed by CORS'));
