@@ -6,7 +6,7 @@ const allowedOrigins = [
     "http://127.0.0.1:3500",
     "http://localhost:3500",
     "https://front-web.pl",
-    "https://front-web.pl/memorek"
+    // "https://front-web.pl/memorek"
 
 
 ];
