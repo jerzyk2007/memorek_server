@@ -13,18 +13,12 @@ const PORT = process.env.PORT || 3500;
 
 
 
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', 'www.front-web.pl'); // Zezwól na dostęp z dowolnej domeny
-    res.header('Access-Control-Allow-Credentials', true);
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-    next();
-});
 // Handle options credentials check - before cors
 // and fetch cookies credentials requirement
-// app.use(credentials);
+app.use(credentials);
 
 // Cross Origin Resource Sharing
-// app.use(cors(corsOptions));
+app.use(cors(corsOptions));
 
 // built-in middleware to handle urlencoded data
 // in other words, form data
