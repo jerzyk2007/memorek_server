@@ -18,8 +18,7 @@ const PORT = process.env.PORT || 3500;
 app.use(credentials);
 
 
-// cookie problemm on Heroku
-app.set('trust proxy', 1);
+
 
 
 // Cross Origin Resource Sharing
@@ -30,6 +29,9 @@ app.use(
         credentials: true,
     })
 );
+
+// cookie problemm on Heroku
+app.set('trust proxy', 1);
 
 
 // built-in middleware to handle urlencoded data
