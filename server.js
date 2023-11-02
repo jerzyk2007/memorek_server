@@ -23,7 +23,14 @@ app.set('trust proxy', 1);
 
 
 // Cross Origin Resource Sharing
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
+app.use(
+    cors({
+        origin: "https://front-web.pl",
+        credentials: true,
+    })
+);
+
 
 // built-in middleware to handle urlencoded data
 // in other words, form data
