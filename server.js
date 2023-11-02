@@ -25,7 +25,6 @@ app.use(cors(corsOptions));
 
 app.use(express.urlencoded({ extended: false }));
 
-app.set('trust proxy', 1);
 
 // built-in middleware for json
 app.use(express.json());
