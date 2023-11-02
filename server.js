@@ -14,7 +14,7 @@ const PORT = process.env.PORT || 3500;
 
 
 app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*'); // Zezwól na dostęp z dowolnej domeny
+    res.header('Access-Control-Allow-Origin', 'www.front-web.pl'); // Zezwól na dostęp z dowolnej domeny
     res.header('Access-Control-Allow-Credentials', true);
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     next();
