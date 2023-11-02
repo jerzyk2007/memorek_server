@@ -12,27 +12,12 @@ const connectDB = require('./config/dbConn');
 const PORT = process.env.PORT || 3500;
 
 
-
 // Handle options credentials check - before cors
 // and fetch cookies credentials requirement
 app.use(credentials);
 
-
-
-
-
 // Cross Origin Resource Sharing
-// app.use(cors(corsOptions));
-app.use(
-    cors({
-        origin: "https://front-web.pl",
-        credentials: true,
-    })
-);
-
-// cookie problemm on Heroku
-app.set('trust proxy', 1);
-
+app.use(cors(corsOptions));
 
 // built-in middleware to handle urlencoded data
 // in other words, form data
