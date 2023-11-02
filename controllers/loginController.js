@@ -36,7 +36,6 @@ const handleLogin = async (req, res) => {
             httpOnly: true,
             sameSite: 'None',
             secure: true,
-            domain: '.https://www.front-web.pl',
             maxAge: 24 * 60 * 60 * 1000
         });
 
