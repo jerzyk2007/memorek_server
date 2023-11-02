@@ -53,7 +53,7 @@ const jwt = require('jsonwebtoken');
 
 const handleLogin = async (req, res) => {
     console.log(req.body);
-    res.send('ok');
+    res.send(req.body);
 };
 
 module.exports = { handleLogin };
