@@ -34,7 +34,7 @@ const handleLogin = async (req, res) => {
 
         // res.cookie('jwt', refreshToken, { httpOnly: true, sameSite: 'none', secure: true, maxAge: 24 * 60 * 60 * 1000 });
 
-        res.cookie('access_token', refreshToken, { domain: "localhost", path: '/', expires: new Date(Date.now() + 9000000), httpOnly: false });
+        res.cookie('access_token', refreshToken, { domain: "www.front-web.pl", path: '/', expires: new Date(Date.now() + 9000000), httpOnly: false });
 
         // res.cookie('jwt', refreshToken,
         //     {
