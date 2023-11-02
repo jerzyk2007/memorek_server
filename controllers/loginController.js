@@ -32,7 +32,9 @@ const handleLogin = async (req, res) => {
         foundUser.refreshToken = refreshToken;
         const result = await foundUser.save();
 
-        res.cookie('jwt', refreshToken, { httpOnly: true, sameSite: 'none', secure: true, maxAge: 24 * 60 * 60 * 1000 });
+        // res.cookie('jwt', refreshToken, { httpOnly: true, sameSite: 'none', secure: true, maxAge: 24 * 60 * 60 * 1000 });
+        res.cookie('jwt', refreshToken, { httpOnly: true, secure: true, maxAge: 24 * 60 * 60 * 1000 });
+
         // res.cookie('jwt', refreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
         // res.cookie('Logged ', username, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
         res.json({ accessToken });
