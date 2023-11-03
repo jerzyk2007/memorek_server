@@ -33,10 +33,9 @@ const handleLogin = async (req, res) => {
         const result = await foundUser.save();
 
         res.cookie('jwt', refreshToken, {
-            httpOnly: true,
+            // httpOnly: true,
             sameSite: 'None',
             secure: true,
-            domain: "http://windykacja.auto.pl",
             maxAge: 24 * 60 * 60 * 1000
         });
 
