@@ -41,7 +41,6 @@ const getTestPhrases = async (req, res) => {
         while (testQuestions.length < questionsLength) {
             const drawIdQuestion = Math.floor(Math.random() * count);
             const drawQuestionElement = await collection.find({}).skip(drawIdQuestion).limit(1).toArray();
-            // const isUniqueQuestion = !testQuestions.some(item => item.question === drawQuestionElement[0].question);
             const isUniqueQuestion = !testQuestions.some(item => item.question === drawQuestionElement[0].answer);
             if (isUniqueQuestion) {
                 let correctAnswer;
@@ -51,12 +50,8 @@ const getTestPhrases = async (req, res) => {
                 else if (type === "reverse") {
                     correctAnswer = drawQuestionElement[0].question;
                 }
-
                 const answers = [];
-
-                // Losowanie pozycji poprawnej odpowiedzi
                 const correctPosition = Math.floor(Math.random() * maxAnswers);
-
                 for (let i = 0; i < maxAnswers; i++) {
                     if (i === correctPosition) {
                         answers.push(correctAnswer);
