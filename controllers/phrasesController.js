@@ -28,8 +28,6 @@ const getLearnPhrases = async (req, res) => {
 
 const getTestPhrases = async (req, res) => {
     const { type, collections } = req.params;
-    console.log(type);
-    console.log(collections);
     let questionsLength = 15;
     let testQuestions = [];
     try {
