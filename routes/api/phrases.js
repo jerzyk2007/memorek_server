@@ -36,9 +36,9 @@ const verifyRoles = require('../../middleware/verifyRoles');
 // router.route('/one')
 //     .get(phrasesController.getSamplePhrase);
 
-router.route('/learn/:collections')
+router.route('/learn/:type/:collections')
     .get(phrasesController.getLearnPhrases);
-router.route('/test/:collections')
+router.route('/test/:type/:collections')
     .get(phrasesController.getTestPhrases);
 
 // router.route('/:collections/:id')
