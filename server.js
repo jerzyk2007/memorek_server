@@ -38,13 +38,13 @@ app.use('/', express.static(path.join(__dirname, '/public')));
 // routes
 // app.use('/', require('./routes/root'));
 app.use('/login', require('./routes/login'));
-app.use('/register', require('./routes/register'));
 app.use('/refresh', require('./routes/refresh'));
 app.use('/logout', require('./routes/logout'));
-
-// app.use(verifyJWT);
 app.use('/phrases', require('./routes/api/phrases'));
 app.use('/collections', require('./routes/api/collections'));
+
+app.use(verifyJWT);
+app.use('/register', require('./routes/api/users'));
 
 app.all('*', (req, res) => {
     res.status(404);
