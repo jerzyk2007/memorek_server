@@ -6,8 +6,6 @@ const handleNewUser = async (req, res) => {
     if (!username || !password) {
         return res.status(400).json({ 'message': 'Username and password are required.' });
     }
-    console.log(username, password);
-
     // check for duplicate usernames in db
     const duplicate = await User.findOne({ username }).exec();
     if (duplicate) return res.status(409).json({ message: `User ${username} is existing in databse` }); // conflict - Unauthorized
@@ -21,7 +19,6 @@ const handleNewUser = async (req, res) => {
             "username": username,
             "password": hashesPwd
         });
-        console.log(result);
         res.status(201).json(`New user ${username} created.`);
     }
     catch (err) {
