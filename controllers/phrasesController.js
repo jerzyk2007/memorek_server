@@ -4,8 +4,6 @@ const mongoose = require('mongoose');
 
 const getLearnPhrases = async (req, res) => {
     const { type, collections } = req.params;
-    console.log(type);
-
     if (collections) {
         try {
             const collection = mongoose.connection.db.collection(collections);
