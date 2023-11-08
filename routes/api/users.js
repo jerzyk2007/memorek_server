@@ -9,12 +9,12 @@ const verifyRoles = require("../../middleware/verifyRoles");
 //   .get(verifyRoles(ROLES_LIST.Admin), usersController.getAllUsers)
 //   .delete(verifyRoles(ROLES_LIST.Admin), usersController.deleteUser);
 
-// router
-//   .route("/:id")
-//   .get(verifyRoles(ROLES_LIST.Admin), usersController.getUser);
+router
+    .route("/change-name")
+    .patch(verifyRoles(ROLES_LIST.User), usersController.handleChangeName);
 
 router
-    .route("/")
+    .route("/register")
     .post(verifyRoles(ROLES_LIST.Admin), usersController.handleNewUser);
 // .post(usersController.handleNewUser);
 // .put(verifyRoles(ROLES_LIST.User), usersController.changePassword);
