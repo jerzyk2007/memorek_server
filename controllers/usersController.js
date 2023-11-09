@@ -26,4 +26,28 @@ const handleNewUser = async (req, res) => {
     }
 };
 
-module.exports = { handleNewUser };
+const handleChangeName = async (req, res) => {
+    const { username, newUsername } = req.body;
+    if (!username || !newUsername) {
+        return res.status(400).json({ 'message': 'Username and new username are required.' });
+    }
+    const duplicate = await User.findOne({ username: newUsername }).exec();
+    if (duplicate) return res.status(409).json({ message: `User ${newUsername} is existing in databse` }); // conflict - Unauthorized
+
+    try {
+        const result = await User.updateOne(
+            { username },
+            { $set: { username: newUsername } }
+        );
+        res.status(201).json(`New username is ${newUsername}.`);
+    }
+    catch (err) {
+        res.status(500).json({ 'message': err.message });
+    }
+
+};
+
+module.exports = {
+    handleNewUser,
+    handleChangeName
+};

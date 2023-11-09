@@ -44,18 +44,18 @@ app.use('/phrases', require('./routes/api/phrases'));
 app.use('/collections', require('./routes/api/collections'));
 
 app.use(verifyJWT);
-app.use('/register', require('./routes/api/users'));
+app.use('/user', require('./routes/api/users'));
 
 app.all('*', (req, res) => {
     res.status(404);
-    if (req.accepts('html')) {
-        res.sendFile(path.join(__dirname, 'views', '404.html'));
-    }
-    else if (req.accepts('json')) {
-        res.json({ error: '404 Not Found' });
-    } else {
-        res.type('txt').send('404 Not Found');
-    }
+    // if (req.accepts('html')) {
+    //     res.sendFile(path.join(__dirname, 'views', '404.html'));
+    // }
+    // else if (req.accepts('json')) {
+    //     res.json({ error: '404 Not Found' });
+    // } else {
+    //     res.type('txt').send('404 Not Found');
+    // }
 }
 );
 
