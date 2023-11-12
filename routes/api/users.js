@@ -14,6 +14,10 @@ router
     .patch(verifyRoles(ROLES_LIST.User), usersController.handleChangeName);
 
 router
+    .route("/change-pass")
+    .patch(verifyRoles(ROLES_LIST.User), usersController.handleChangePassword);
+
+router
     .route("/register")
     .post(verifyRoles(ROLES_LIST.Admin), usersController.handleNewUser);
 // .post(usersController.handleNewUser);

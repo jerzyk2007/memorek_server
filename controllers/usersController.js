@@ -13,11 +13,11 @@ const handleNewUser = async (req, res) => {
 
     try {
         // encrypt the password
-        const hashesPwd = await bcrypt.hash(password, 10);
+        const hashedPwd = await bcrypt.hash(password, 10);
         // create and store the new user
         const result = await User.create({
             "username": username,
-            "password": hashesPwd
+            "password": hashedPwd
         });
         res.status(201).json(`New user ${username} created.`);
     }
@@ -46,8 +46,55 @@ const handleChangeName = async (req, res) => {
     }
 
 };
+const handleChangePassword = async (req, res) => {
+    const { username, password } = req.body;
+
+    if (!username || !password) {
+        return res.status(400).json({ 'message': 'Wymagane są nazwa użytkownika i hasło.' });
+    }
+    try {
+        const findUser = await User.find({ username }).exec();
+        const hashedPwd = await bcrypt.hash(password, 10);
+        if (findUser) {
+            const result = await User.updateOne(
+                { username: username },
+                { $set: { password: hashedPwd } }
+            );
+        } else {
+            return res.status(404).json({ 'message': 'User not found.' });
+        }
+
+        res.status(201).json({ 'message': 'Password is changed' });
+    }
+    catch (err) {
+        res.status(500).json({ 'message': err.message });
+    }
+};
+
+// const handleChangePassword = async (req, res) => {
+//     const { username, password } = req.body;
+//     if (!username || !password) {
+//         return res.status(400).json({ 'message': 'Username and password are required.' });
+//     }
+
+//     // const findUser = await User.find({ username }).exec();
+
+//     try {
+//         const hashedPwd = await bcrypt.hash(password, 10);
+//         const result = await User.updateOne(
+//             { username },
+//             { $set: { password: hashesPwd } }
+//         );
+//         res.status(201).json(`Password is changed`);
+//     }
+//     catch (err) {
+//         res.status(500).json({ 'message': err.message });
+
+//     }
+// };
 
 module.exports = {
     handleNewUser,
-    handleChangeName
+    handleChangeName,
+    handleChangePassword
 };
