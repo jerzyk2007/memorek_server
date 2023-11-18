@@ -15,7 +15,7 @@ const Users = require('./model/User');
 
 // Handle options credentials check - before cors
 // and fetch cookies credentials requirement
-app.use(credentials);
+// app.use(credentials);
 
 //  CORS configuration
 app.use(cors(corsOptions));
