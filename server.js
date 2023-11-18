@@ -1,30 +1,26 @@
 require('dotenv').config();
 const express = require('express');
 const app = express();
-const path = require('path');
 const cors = require('cors');
+const mongoose = require('mongoose');
+const cookieParser = require('cookie-parser');
+const connectDB = require('./config/dbConn');
 const corsOptions = require('./config/corsOptions');
 const credentials = require('./middleware/credentials');
 const verifyJWT = require('./middleware/verifyJWT');
-const cookieParser = require('cookie-parser');
-const mongoose = require('mongoose');
-const connectDB = require('./config/dbConn');
-const PORT = process.env.PORT || 3500;
+const Users = require('./model/User');
+const bcryptjs = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 
 // Handle options credentials check - before cors
 // and fetch cookies credentials requirement
 app.use(credentials);
 
-// Cross Origin Resource Sharing
+//  CORS configuration
 app.use(cors(corsOptions));
 
-// built-in middleware to handle urlencoded data
-// in other words, form data
-// 'content-type:application/x-www-form-urlencoded
-
 app.use(express.urlencoded({ extended: false }));
-
 
 // built-in middleware for json
 app.use(express.json());
@@ -32,39 +28,28 @@ app.use(express.json());
 // middleware for cookies
 app.use(cookieParser());
 
-// server static files
-app.use('/', express.static(path.join(__dirname, '/public')));
 
-// routes
-// app.use('/', require('./routes/root'));
+
 app.use('/login', require('./routes/login'));
 app.use('/refresh', require('./routes/refresh'));
 app.use('/logout', require('./routes/logout'));
 app.use('/phrases', require('./routes/api/phrases'));
 app.use('/collections', require('./routes/api/collections'));
 
+//protected routes
 app.use(verifyJWT);
 app.use('/user', require('./routes/api/users'));
 
 app.all('*', (req, res) => {
     res.status(404);
-    // if (req.accepts('html')) {
-    //     res.sendFile(path.join(__dirname, 'views', '404.html'));
-    // }
-    // else if (req.accepts('json')) {
-    //     res.json({ error: '404 Not Found' });
-    // } else {
-    //     res.type('txt').send('404 Not Found');
-    // }
-}
-);
+});
 
 // connect to mongoDB
 connectDB();
 
 mongoose.connection.once('open', () => {
     console.log('Connected to mongoDB');
-    app.listen(PORT, () => {
-        console.log(`Server is listenig on port ${PORT}`);
+    app.listen(process.env.PORT || 3500, () => {
+        console.log(`Server is listenig on port 3500`);
     });
 });

@@ -1,5 +1,5 @@
 const Users = require('../model/User');
-const bcrypt = require('bcrypt');
+const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const handleLogin = async (req, res) => {
@@ -11,7 +11,7 @@ const handleLogin = async (req, res) => {
     if (!foundUser) {
         return res.sendStatus(401);
     }
-    const match = await bcrypt.compare(password, foundUser.password);
+    const match = await bcryptjs.compare(password, foundUser.password);
     if (match) {
         const roles = Object.values(foundUser.roles).filter(Boolean);
         const accessToken = jwt.sign({

@@ -1,5 +1,3 @@
-
-// const Phrase = require('../model/Phrase');
 const mongoose = require('mongoose');
 
 const getLearnPhrases = async (req, res) => {
