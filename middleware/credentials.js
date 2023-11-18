@@ -15,8 +15,8 @@
 
 const credentials = (req, res, next) => {
     const origin = req.headers.origin;
-    if (process.env.ALLOWED_ORIGINS.includes(origin)) {
-        res.header("Access-Control-Allow-Credentials", true);
+    if (allowedOrigins.includes(origin)) {
+        res.header('Access-Control-Allow-Credentials', true);
     }
     next();
 };
