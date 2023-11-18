@@ -19,6 +19,18 @@ app.use(credentials);
 
 //  CORS configuration
 app.use(cors(corsOptions));
+// app.use(
+//     cors({
+//         origin: ["https://www.memorek-online.pl",
+//             "http://www.memorek-online.pl",
+//             "http://localhost:3000",
+//             "http://www.front-web.pl",
+//             "https://www.front-web.pl"
+//         ],
+//         optionsSuccessStatus: 200,
+//         credentials: true,
+//     })
+// );
 
 app.use(express.urlencoded({ extended: false }));
 
