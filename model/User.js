@@ -4,7 +4,9 @@ const { Schema } = mongoose;
 const userSchema = new Schema({
     username: {
         type: String,
-        required: true
+        required: true,
+        unique: true,
+        maxlength: 30
     },
     roles: {
         User: {
@@ -15,7 +17,8 @@ const userSchema = new Schema({
     },
     password: {
         type: String,
-        required: true
+        required: true,
+        maxlength: 30
     },
     refreshToken: String
 });
