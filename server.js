@@ -8,14 +8,17 @@ const connectDB = require('./config/dbConn');
 const corsOptions = require('./config/corsOptions');
 const credentials = require('./middleware/credentials');
 const verifyJWT = require('./middleware/verifyJWT');
+const { logger } = require('./middleware/logEvents');
 const Users = require('./model/User');
 // const bcryptjs = require('bcryptjs');
 // const jwt = require('jsonwebtoken');
 
+// custom middleware logger
+app.use(logger);
 
 // Handle options credentials check - before cors
 // and fetch cookies credentials requirement
-// app.use(credentials);
+app.use(credentials);
 
 //  CORS configuration
 app.use(cors(corsOptions));
