@@ -1,5 +1,3 @@
-// const allowedOrigins = "https://www.memorek-online.pl";
-// const allowedOrigins = ["https://www.memorek-online.pl"];
 const allowedOrigins =
     ["https://www.memorek-online.pl",
         "https://memorek-online.pl",

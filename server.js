@@ -10,8 +10,6 @@ const credentials = require('./middleware/credentials');
 const verifyJWT = require('./middleware/verifyJWT');
 const { logger } = require('./middleware/logEvents');
 const Users = require('./model/User');
-// const bcryptjs = require('bcryptjs');
-// const jwt = require('jsonwebtoken');
 
 // custom middleware logger
 app.use(logger);
@@ -32,10 +30,6 @@ app.use(express.json());
 // middleware for cookies
 app.use(cookieParser());
 
-// app.get('/getOrigin',(req, res)=>{
-//     const origin = req.headers.origin;
-//     res.send({ origin });
-// } )
 app.use('/login', require('./routes/login'));
 app.use('/refresh', require('./routes/refresh'));
 app.use('/logout', require('./routes/logout'));
