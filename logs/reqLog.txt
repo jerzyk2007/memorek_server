@@ -1,3 +1,6 @@
 20231119	15:47:00	68ab672a-cf16-4080-a219-175a1a6c4cfe	GET	http://localhost:3000	/collections
 20231119	15:47:00	9884a5b0-4b08-4482-bbe6-350311838da0	GET	http://localhost:3000	/collections
 20231119	15:47:09	2beb639c-8a94-4e8d-80d5-39f545a609d1	GET	http://localhost:3000	/phrases/test/normal/words1
+20231119	15:52:41	95500712-2730-4603-bb8c-51bbe22eb340	GET	http://localhost:3000	/collections
+20231119	15:52:42	53b970f9-50ae-4f01-8535-39c7e45513bd	GET	http://localhost:3000	/collections
+20231119	15:52:43	47f6e2ab-8a32-4105-b095-2eae346ab411	GET	http://localhost:3000	/phrases/test/normal/words1
