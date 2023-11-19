@@ -17,8 +17,7 @@ const userSchema = new Schema({
     },
     password: {
         type: String,
-        required: true,
-        maxlength: 30
+        required: true
     },
     refreshToken: String
 });
