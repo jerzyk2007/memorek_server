@@ -95,33 +95,6 @@ const getTestPhrases = async (req, res) => {
     }
 };
 
-// const getSearchPhrases = async (req, res) => {
-//     const { collections, search } = req.query;
-//     if (collections) {
-//         try {
-//             const collection = mongoose.connection.db.collection("words4");
-//             const collectionsName = await collection.find({}).toArray();
-//             const findPhrases = collectionsName.map(phrase => {
-//                 if (phrase.question.includes(search) || phrase.answer.includes(search)) {
-//                     return {
-//                         _id: phrase._id.toString(),
-//                         question: phrase.question,
-//                         answer: phrase.answer
-//                     };
-//                 } else return {};
-//             });
-//             const filteredPhrases = findPhrases.filter(phrase => Object.keys(phrase).length !== 0);
-
-//             console.log(filteredPhrases);
-//             res.json(filteredPhrases);
-//         }
-//         catch (err) {
-//             console.error(err);
-//             res.status(500).json({ err: 'Server error' });
-//         }
-//     }
-// };
-
 const getSearchPhrases = async (req, res) => {
     const { collections, search } = req.query;
 
