@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Phrase = require('../model/Phrase');
 
 const getLearnPhrases = async (req, res) => {
     const { type, collections } = req.params;
@@ -7,10 +8,12 @@ const getLearnPhrases = async (req, res) => {
             const collection = mongoose.connection.db.collection(collections);
             const collectionsName = await collection.find({}).toArray();
             if (type === "normal") {
-                res.json(collectionsName);
+                const newCollectionsName = collectionsName.map(({ _id, ...rest }) => rest);
+                res.json(newCollectionsName);
             } else if (type === "reverse") {
                 const reverseCollections = collectionsName.map(item => ({ question: item.answer, answer: item.question }));
-                res.json(reverseCollections);
+                const newCollectionsName = reverseCollections.map(({ _id, ...rest }) => rest);
+                res.json(newCollectionsName);
             }
         } catch (error) {
             console.error(error);
@@ -92,8 +95,36 @@ const getTestPhrases = async (req, res) => {
     }
 };
 
+const getSearchPhrases = async (req, res) => {
+    const { collections, search } = req.query;
+    if (collections) {
+        try {
+            const collection = mongoose.connection.db.collection("words4");
+            const collectionsName = await collection.find({}).toArray();
+            const findPhrases = collectionsName.map(phrase => {
+                if (phrase.question === search || phrase.answer === search) {
+                    return {
+                        _id: phrase._id.toString(),
+                        question: phrase.question,
+                        answer: phrase.answer
+                    };
+                } else return {};
+            });
+            const filteredPhrases = findPhrases.filter(phrase => Object.keys(phrase).length !== 0);
+
+            console.log(filteredPhrases);
+            res.json('findPhrases');
+        }
+        catch (err) {
+            console.error(err);
+            res.status(500).json({ err: 'Server error' });
+        }
+    }
+};
+
 
 module.exports = {
     getLearnPhrases,
-    getTestPhrases
+    getTestPhrases,
+    getSearchPhrases
 };

@@ -9,7 +9,6 @@ const corsOptions = require('./config/corsOptions');
 const credentials = require('./middleware/credentials');
 const verifyJWT = require('./middleware/verifyJWT');
 const { logger } = require('./middleware/logEvents');
-const Users = require('./model/User');
 
 // custom middleware logger
 app.use(logger);
@@ -39,6 +38,9 @@ app.use('/collections', require('./routes/api/collections'));
 //protected routes
 app.use(verifyJWT);
 app.use('/user', require('./routes/api/users'));
+app.use('/search', require('./routes/api/phrases'));
+
+
 
 app.all('*', (req, res) => {
     res.status(404);

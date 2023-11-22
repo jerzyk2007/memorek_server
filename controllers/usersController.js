@@ -71,7 +71,6 @@ const handleChangePassword = async (req, res) => {
     }
 };
 
-
 module.exports = {
     handleNewUser,
     handleChangeName,
