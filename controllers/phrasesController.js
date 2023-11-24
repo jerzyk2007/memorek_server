@@ -106,7 +106,7 @@ const getSearchPhrases = async (req, res) => {
                 const collection = mongoose.connection.db.collection(collectionName);
                 const collectionsData = await collection.find({}).toArray();
                 const findPhrases = collectionsData.map(phrase => {
-                    if (phrase.question.includes(search) || phrase.answer.includes(search)) {
+                    if (phrase.question.toLowerCase().includes(search.toLowerCase()) || phrase.answer.toLowerCase().includes(search.toLowerCase())) {
                         return {
                             _id: phrase._id,
                             question: phrase.question,
