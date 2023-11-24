@@ -131,30 +131,50 @@ const getSearchPhrases = async (req, res) => {
 
 // 
 
-const getChangePhrase = async (req, res) => {
+const changePhrase = async (req, res) => {
     const { id, question, answer, collection } = req.body;
-    if (!req?.params?.id || !question || !answer || !collection) {
+    if (!id || !question || !answer || !collection) {
         return res.status(400).json({ 'message': 'Invalid data.' });
     }
-
     try {
-        const searchCollection = mongoose.connection.db.collection(collection);
-        const result = await searchCollection.updateOne(
-            { _id: id },
-            { $set: { question, answer } }
-        );
-        console.log(result);
-
-        if (result.modifiedCount === 1) {
-            console.log('Dokument został zaktualizowany.');
-            res.status(200).json({ 'message': 'Dokument został zaktualizowany.' });
+        const PhraseModel = Phrase(collection);
+        const findPhrase = await PhraseModel.findOne({ _id: id }).exec();
+        if (findPhrase) {
+            const result = await PhraseModel.updateOne(
+                { _id: id },
+                { $set: { question, answer } }
+            );
         } else {
-            console.log('Nie znaleziono dokumentu do aktualizacji.');
-            res.status(404).json({ 'message': 'Nie znaleziono dokumentu do aktualizacji.' });
+            return res.status(404).json({ 'message': 'Phrase not found.' });
         }
+        res.status(201).json({ 'message': 'Phrase is changed' });
+
+
+
     } catch (err) {
         console.error(err);
         res.status(500).json({ 'message': 'Server Error' });
+    }
+};
+
+const deletePhrase = async (req, res) => {
+    const { id } = req.params;
+    const { collection } = req.query;
+    if (!id) {
+        return res.status(400).json({ 'message': 'Invalid data.' });
+    }
+    try {
+        const PhraseModel = Phrase(collection);
+        const findPhrase = await PhraseModel.findOne({ _id: id }).exec();
+        if (findPhrase) {
+            const result = await PhraseModel.deleteOne({ _id: id });
+            return res.status(200).json({ 'message': 'Phrase deleted.' });
+        } else {
+            return res.status(404).json({ 'message': 'Phrase not found.' });
+        }
+    }
+    catch (err) {
+        console.log(err);
     }
 };
 
@@ -162,5 +182,6 @@ module.exports = {
     getLearnPhrases,
     getTestPhrases,
     getSearchPhrases,
-    getChangePhrase
+    changePhrase,
+    deletePhrase
 };

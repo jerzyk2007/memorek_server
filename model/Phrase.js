@@ -13,5 +13,11 @@ const phraseSchema = new Schema({
         maxlength: 150
     },
 });
+// const getModel = (collectionName) => mongoose.model(collectionName, phraseSchema);
+// module.exports = getModel;
+const getModel = (collectionName) => {
+    const model = mongoose.models[collectionName] || mongoose.model(collectionName, phraseSchema, collectionName);
+    return model;
+};
 
-module.exports = mongoose.model("Phrase", phraseSchema);
+module.exports = getModel;

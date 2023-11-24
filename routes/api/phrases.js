@@ -9,6 +9,8 @@ router.route('/test/:type/:collections')
 router.route('/phrases')
     .get(phrasesController.getSearchPhrases);
 router.route('/change')
-    .patch(phrasesController.getChangePhrase);
+    .patch(phrasesController.changePhrase);
+router.route('/:id')
+    .delete(phrasesController.deletePhrase);
 
 module.exports = router;
