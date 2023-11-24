@@ -108,9 +108,10 @@ const getSearchPhrases = async (req, res) => {
                 const findPhrases = collectionsData.map(phrase => {
                     if (phrase.question.includes(search) || phrase.answer.includes(search)) {
                         return {
-                            _id: phrase._id.toString(),
+                            _id: phrase._id,
                             question: phrase.question,
-                            answer: phrase.answer
+                            answer: phrase.answer,
+                            collection: collectionName
                         };
 
                     } else {
@@ -128,9 +129,38 @@ const getSearchPhrases = async (req, res) => {
     }
 };
 
+// 
+
+const getChangePhrase = async (req, res) => {
+    const { id, question, answer, collection } = req.body;
+    if (!req?.params?.id || !question || !answer || !collection) {
+        return res.status(400).json({ 'message': 'Invalid data.' });
+    }
+
+    try {
+        const searchCollection = mongoose.connection.db.collection(collection);
+        const result = await searchCollection.updateOne(
+            { _id: id },
+            { $set: { question, answer } }
+        );
+        console.log(result);
+
+        if (result.modifiedCount === 1) {
+            console.log('Dokument został zaktualizowany.');
+            res.status(200).json({ 'message': 'Dokument został zaktualizowany.' });
+        } else {
+            console.log('Nie znaleziono dokumentu do aktualizacji.');
+            res.status(404).json({ 'message': 'Nie znaleziono dokumentu do aktualizacji.' });
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ 'message': 'Server Error' });
+    }
+};
 
 module.exports = {
     getLearnPhrases,
     getTestPhrases,
-    getSearchPhrases
+    getSearchPhrases,
+    getChangePhrase
 };
