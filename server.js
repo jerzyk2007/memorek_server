@@ -39,6 +39,7 @@ app.use('/collections', require('./routes/api/collections'));
 app.use(verifyJWT);
 app.use('/user', require('./routes/api/users'));
 app.use('/search', require('./routes/api/phrases'));
+app.use('/add-data', require('./routes/api/phrases'));
 
 
 

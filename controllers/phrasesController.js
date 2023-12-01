@@ -2,11 +2,11 @@ const mongoose = require('mongoose');
 const Phrase = require('../model/Phrase');
 
 const getLearnPhrases = async (req, res) => {
-    const { type, collections } = req.params;
-    if (collections) {
+    const { type, collection } = req.params;
+    if (collection) {
         try {
-            const collection = mongoose.connection.db.collection(collections);
-            const collectionsName = await collection.find({}).toArray();
+            const findCollection = mongoose.connection.db.collection(collection);
+            const collectionsName = await findCollection.find({}).toArray();
             if (type === "normal") {
                 const newCollectionsName = collectionsName.map(({ _id, ...rest }) => rest);
                 res.json(newCollectionsName);
@@ -26,12 +26,15 @@ const getLearnPhrases = async (req, res) => {
 
 
 const getTestPhrases = async (req, res) => {
-    const { type, collections } = req.params;
+    const { type, collection } = req.params;
     let questionsLength = 15;
     let testQuestions = [];
     try {
-        const collection = mongoose.connection.db.collection(collections);
-        const count = await collection.countDocuments({});
+        const findCollection = mongoose.connection.db.collection(collection);
+        const count = await findCollection.countDocuments({});
+        if (count < 4) {
+            return res.status(507).json({ 'message': `The collection ${collection} has ${count} elements, it must contain more than 4.` });
+        }
         if (questionsLength > count) {
             questionsLength = count;
         }
@@ -39,7 +42,7 @@ const getTestPhrases = async (req, res) => {
 
         while (testQuestions.length < questionsLength) {
             const drawIdQuestion = Math.floor(Math.random() * count);
-            const drawQuestionElement = await collection.find({}).skip(drawIdQuestion).limit(1).toArray();
+            const drawQuestionElement = await findCollection.find({}).skip(drawIdQuestion).limit(1).toArray();
             let isUniqueQuestion;
             if (type === 'normal') {
                 isUniqueQuestion = !testQuestions.some(item => item.question === drawQuestionElement[0].question);
@@ -63,7 +66,7 @@ const getTestPhrases = async (req, res) => {
                         let answer;
                         do {
                             const drawIdAnswer = Math.floor(Math.random() * count);
-                            const drawAnswerElement = await collection.find({}).skip(drawIdAnswer).limit(1).toArray();
+                            const drawAnswerElement = await findCollection.find({}).skip(drawIdAnswer).limit(1).toArray();
                             if (type === 'normal') {
                                 answer = drawAnswerElement[0].answer;
                             } else if (type === 'reverse') {
@@ -129,8 +132,6 @@ const getSearchPhrases = async (req, res) => {
     }
 };
 
-// 
-
 const changePhrase = async (req, res) => {
     const { id, question, answer, collection } = req.body;
     if (!id || !question || !answer || !collection) {
@@ -164,14 +165,41 @@ const deletePhrase = async (req, res) => {
         return res.status(400).json({ 'message': 'Invalid data.' });
     }
     try {
+        const count = await mongoose.connection.db.collection(collection).countDocuments();
         const PhraseModel = Phrase(collection);
         const findPhrase = await PhraseModel.findOne({ _id: id }).exec();
         if (findPhrase) {
-            const result = await PhraseModel.deleteOne({ _id: id });
+            await PhraseModel.deleteOne({ _id: id });
+            if (count === 1) {
+                await mongoose.connection.db.collection(collection).drop();
+            }
             return res.status(200).json({ 'message': 'Phrase deleted.' });
         } else {
             return res.status(404).json({ 'message': 'Phrase not found.' });
         }
+    }
+    catch (err) {
+        console.log(err);
+    }
+};
+
+const addDataSingle = async (req, res) => {
+    const { nameCollection, newPhrase } = req.body;
+    const question = newPhrase.question;
+    const answer = newPhrase.answer;
+    try {
+        const PhraseModel = Phrase(nameCollection);
+        const count = await mongoose.connection.db.collection(nameCollection).countDocuments();
+        if (count < 50) {
+            const result = await PhraseModel.create({
+                question, answer
+            });
+            res.status(201).json(`New phrase is added`);
+        }
+        else {
+            res.status(507).json({ 'message': `Collections ${nameCollection} is full !!!` });
+        }
+
     }
     catch (err) {
         console.log(err);
@@ -183,5 +211,6 @@ module.exports = {
     getTestPhrases,
     getSearchPhrases,
     changePhrase,
-    deletePhrase
+    deletePhrase,
+    addDataSingle
 };
