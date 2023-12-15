@@ -14,5 +14,9 @@ router.route('/:id')
     .delete(phrasesController.deletePhrase);
 router.route('/single')
     .post(phrasesController.addDataSingle);
+router.route('/manyPhrases')
+    .post(phrasesController.addDataMany);
+router.route('/manyCollectionsManyPhrases')
+    .post(phrasesController.addManyCollectionsManyPhrases);
 
 module.exports = router;
