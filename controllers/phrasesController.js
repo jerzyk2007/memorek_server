@@ -238,31 +238,59 @@ const addDataMany = async (req, res) => {
 
 };
 
+
 const addManyCollectionsManyPhrases = async (req, res) => {
     const { collections, phrases } = req.body;
     const collection = collections[0].name;
+
     try {
 
         const count = await mongoose.connection.db.collection(collection).countDocuments();
         if (maxCollectionLength - count !== collections[0].count) {
             res.status(507).json({ 'message': `Error! Collections ${collection} is full !!!` });
-        } else {
-            let counter = 0;
-            collections.map(col => {
-                const newPhrases = [...phrases];
-                const PhraseModel = Phrase(col.name);
-                const phrasesSlice = newPhrases.slice(counter, col.count + counter);
-                phrasesSlice.map(async (phrase) => {
-                    await PhraseModel.create({
-                        question: phrase.question,
-                        answer: phrase.answer,
-                    });
-                });
-                counter += col.count;
-            });
-
         }
-        res.status(200).send('Added');
+
+        let counter = 0;
+        collections.map(col => {
+            const newPhrases = [...phrases];
+            const PhraseModel = Phrase(col.name);
+            const phrasesSlice = newPhrases.slice(counter, col.count + counter);
+            phrasesSlice.map(async (phrase) => {
+                await PhraseModel.create({
+                    question: phrase.question,
+                    answer: phrase.answer,
+                });
+
+            });
+            counter += col.count;
+        });
+        res.status(201).send('Added');
+
+    }
+    catch (err) {
+        console.error(err);
+        res.status(500).json({ 'message': 'Server Error' });
+    }
+};
+
+const checkDuplicates = async (req, res) => {
+    const { phrases, name } = req.body;
+    try {
+        let duplicatesPhrases = [...phrases];
+
+        for (const item of name) {
+            const PhraseModel = Phrase(item);
+
+            await Promise.all(duplicatesPhrases.map(async (dupl) => {
+                const findDuplicate = await PhraseModel.findOne({ question: dupl.question }).exec();
+                if (findDuplicate) {
+                    dupl.question = '';
+                    dupl.answer = '';
+                }
+            }));
+            duplicatesPhrases = duplicatesPhrases.filter(dupl => dupl.question !== '' || dupl.answer !== '');
+        }
+        res.status(200).json(duplicatesPhrases);
     }
     catch (err) {
         console.error(err);
@@ -278,5 +306,7 @@ module.exports = {
     deletePhrase,
     addDataSingle,
     addDataMany,
-    addManyCollectionsManyPhrases
+    addManyCollectionsManyPhrases,
+    checkDuplicates
+
 };

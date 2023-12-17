@@ -18,5 +18,7 @@ router.route('/manyPhrases')
     .post(phrasesController.addDataMany);
 router.route('/manyCollectionsManyPhrases')
     .post(phrasesController.addManyCollectionsManyPhrases);
+router.route('/checkDuplicates')
+    .post(phrasesController.checkDuplicates);
 
 module.exports = router;
