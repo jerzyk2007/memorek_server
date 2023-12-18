@@ -9,6 +9,12 @@ const corsOptions = require('./config/corsOptions');
 const credentials = require('./middleware/credentials');
 const verifyJWT = require('./middleware/verifyJWT');
 const { logger } = require('./middleware/logEvents');
+const bodyParser = require('body-parser');
+
+
+// limit to 10 MB
+app.use(bodyParser.json({ limit: '10mb' }));
+app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
 
 // custom middleware logger
 app.use(logger);
@@ -28,6 +34,7 @@ app.use(express.json());
 
 // middleware for cookies
 app.use(cookieParser());
+
 
 app.use('/login', require('./routes/login'));
 app.use('/refresh', require('./routes/refresh'));

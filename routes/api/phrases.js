@@ -15,10 +15,10 @@ router.route('/:id')
 router.route('/single')
     .post(phrasesController.addDataSingle);
 router.route('/manyPhrases')
-    .post(phrasesController.addDataMany);
+    .get(phrasesController.addDataMany);
 router.route('/manyCollectionsManyPhrases')
-    .post(phrasesController.addManyCollectionsManyPhrases);
+    .get(phrasesController.addManyCollectionsManyPhrases);
 router.route('/checkDuplicates')
-    .post(phrasesController.checkDuplicates);
+    .get(phrasesController.checkDuplicates);
 
 module.exports = router;
